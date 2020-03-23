@@ -1,0 +1,237 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+//Codigo de los coleres
+void red (){
+  printf("\033[0;31m");
+}
+void yellow (){
+  printf("\033[0;33m");
+}
+void green (){
+  printf ("\033[0;32m");
+}
+void blue (){
+  printf ("\033[0;34m");
+}
+void magenta (){
+  printf ("\033[0;35m");
+}
+void cyan (){
+  printf ("\033[0;36m");
+}
+void boldgreen (){
+  printf("\033[1;32m");
+}
+void boldred (){
+  printf("\033[1;31m");
+}
+void reset (){
+  printf ("\033[0m");
+}
+void clearscreen(){
+    system("@cls||clear");
+}
+
+int interpretarLetra (char letra)
+{
+  //UpperCase
+  if (letra >= 65 && letra <= 90){
+    return (letra - 65);
+  }
+  //LowerCase
+  else{
+    return (letra - 97);
+}
+}
+
+int interpretarNumero (char primeraPosicion, char segundaPosicion) {
+  int resultado = 0;
+  //solo un digito
+  if (segundaPosicion == 0){
+      resultado = primeraPosicion - 48;
+      return resultado - 1;
+      //dos digitos
+    }
+  else
+    {
+      //conseguir primer numero
+      resultado = (primeraPosicion - 48) * 10;
+      resultado = resultado + (segundaPosicion - 48);
+      return resultado - 1;
+    }
+}
+
+int reservar_asientos = 1;
+int ver_asientos_disponibles=2;
+int ver_resumen=3;
+int salir = 4;
+int choice;
+char NUMERO_VUELO [6];
+char menu;
+int regresar = 0;
+int contador = 0;
+float por_asientos_tomados;
+int asientos_no_res;
+float por_asientos_no_tomados;
+
+int main(void) {
+    char vuelos [32][6];
+      for(int x=0; x<32 ; x++){
+        for (int y=0; y<6; y++){
+    vuelos [x][y]= '0';
+    }  
+  }
+
+yellow ();
+  printf ("---------------- BIENVENID@ A LA RESERVACION DE VUELOS ---------------\n");
+  printf("\n");
+  printf("----------------- PORFAVOR INGRESE EL NUMERO DE VUELO -----------------\n");
+  scanf ("%s", NUMERO_VUELO);
+  reset ();
+  printf ("        ____\n");
+  printf ("        \\   `.\n");
+  printf ("         \\    `.\n");
+  printf ("          \\     `.\n");
+  printf ("           \\%s`.\n", NUMERO_VUELO);
+  printf ("          :. . . . `.____________________________________\n");
+  printf ("            \\            TUKI AIRLINES                   ` -._\n");
+  printf ("            /'''''''''/             ...---------..           ~-._\n");
+  printf ("           //     .`_________  .-`           \\ .-~              /\n");
+  printf ("          //    .'       ||__.~             .-~________________/\n");
+  printf ("         //___.`           .~            .-~\n");
+  printf ("                         .~           .-~\n");
+  printf ("                       .~         _.-~\n");
+  printf ("                       `-_____.-~'\n");
+
+  printf ("\n");
+    printf ("\n");
+    printf ("\n");
+    while (1){
+green ();
+printf("                        ############## MENU ############\n");
+printf("                        #                              #\n");
+printf("                        #  1. RESERVAR ASIENTOS        #\n");
+printf("                        #                              #\n");
+printf("                        #  2. VER ASIENTOS DISPONIBLES #\n");
+printf("                        #                              #\n");
+printf("                        #  3. VER RESUMEN              #\n");
+printf("                        #                              #\n");
+printf("                        #  4. SALIR                    #\n");
+printf("                        #                              #\n");
+printf("                        #                              #\n");
+printf("                        ################################\n");
+reset ();
+  scanf ("%d", &choice);
+
+  if (choice == reservar_asientos){
+    //CODIGO RESERVA DE ASIENTOS
+    while (1)
+    {
+      printf ("Ingrese el asiento que quiere reservar\n ");
+      char reserva[3];
+      scanf ("%s", reserva);
+       if (strncmp(reserva, "menu", 4) == 0){
+          salir = 1;
+          break; 
+        }
+
+      int x = interpretarLetra (reserva[0]);
+      int y = interpretarNumero (reserva[1], reserva[2]);
+
+      if (vuelos[y][x] != '0'){
+      printf ("Ese asiento ya esta reservado!! Intente de nuevo\n");
+      continue;
+    }
+      vuelos[y][x] = 'X';
+      contador = contador+1;
+      printf ("|   | A | B | C | D | E | F |\n");
+      printf ("-----------------------------\n");
+      for (int x = 0; x < 32; x++){
+      printf ("| %2d", x + 1);
+      for (int y = 0; y < 6; y++){
+          printf ("| %c ", vuelos[x][y]);
+        }
+      printf ("| \n");
+    }
+       int c, d;
+   
+   for (c = 1; c <= 32767; c++)
+       for (d = 1; d <= 32767; d++)
+       {}
+        printf ("Su asiento ha sido reservado exitosamente\n");
+              printf ("Ingrese otro asiento a reservar, De lo contrario ingrese '0' para regresar al menu : \n");
+               scanf("%d", &choice);
+              if (choice==regresar){
+               break;
+                   // if (strncmp(reserva, "regresar", 4) == 0){
+              //salir = 1;
+          //break; 
+        }
+
+      }
+
+
+ //PONER PARA QUE REGRESE A EL MENU 
+    }
+  if (choice == ver_asientos_disponibles){
+    // CODIGO DE ASIENTOS DISPONIBLES
+    yellow ();
+    printf("LOS ASIENTOS QUE TIENEN UN '0' SON LOS QUE NO ESTAN RESERVADOS \n");
+    reset();
+    printf ("|   | A | B | C | D | E | F |\n");
+    printf ("-----------------------------\n");
+    for (int x=0; x<32;x++){
+        printf ("| %2d ", x+1);
+        for (int y=0; y<6; y++){
+          printf ("| %c ", vuelos [x][y]);
+        }
+        printf ("| \n");
+    }
+     int c, d;
+   
+   for (c = 1; c <= 32767; c++)
+       for (d = 1; d <= 32767; d++)
+       {}
+
+  }
+  
+  else if (choice == ver_resumen){
+    // CODIGO DE RESUMEN DE LAS RESERVAS.
+    printf ("\n");
+    printf ("\n");
+    green();
+    printf ("%d ASIENTOS RESERVADOS DE 192 \n", contador);
+    por_asientos_tomados = (float)contador / 100 * 192.0;
+        printf(             "El porcentaje de asientos RESERVADOS: %.2f \n", por_asientos_tomados);
+    printf ("\n");
+    printf ("\n");
+    asientos_no_res = 192 - contador;
+    printf("%d ASIENTOS NO RESERVADOS\n", asientos_no_res);
+    por_asientos_no_tomados = 100 - (float)por_asientos_tomados;
+    printf("EL PORCENTAJE DE ASIENTOS NO RESERVADOS : %2f\n", por_asientos_no_tomados);
+    printf ("\n");
+    printf ("\n");
+
+
+
+     int c, d;
+   
+   for (c = 1; c <= 32767; c++)
+       for (d = 1; d <= 32767; d++)
+       {}
+
+  }
+  else if (choice == salir){
+    yellow();
+    printf ("               ----------------------------------------------------\n");
+    printf ("               GRACIAS POR USAR EL PROGRAMA... QUE TENGA UN BUEN DIA\n");
+    printf ("               _____________________________________________________\n");
+    // SALIDA
+
+    return 0;
+  }
+    }
+  return 0;
+}
